@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# pycharm garbage
+.idea\
+
 # Distribution / packaging
 .Python
 build/
@@ -145,7 +148,6 @@ dmypy.json
 cython_debug/
 
 dev/
-.idea/
 
 # PyCharm
 #  JetBrains specific template is maintainted in a separate JetBrains.gitignore that can
