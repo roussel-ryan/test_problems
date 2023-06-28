@@ -61,28 +61,33 @@ class TorchQuad(Module):
     def forward(self):
         M = torch.eye(6)
 
-        if self.K1 < 0:
-            K1 = -self.K1
-            flip = True
+        if self.K1 == 0.0:
+            M[0, 1] = self.L
+            M[2, 3] = self.L
+
         else:
-            K1 = self.K1
-            flip = False
+            if self.K1 < 0:
+                K1 = -self.K1
+                flip = True
+            else:
+                K1 = self.K1
+                flip = False
 
-        k = torch.sqrt(K1)
+            k = torch.sqrt(K1)
 
-        kl = self.L * k
-        M[0, 0] = torch.cos(kl)
-        M[0, 1] = torch.sin(kl) / k
-        M[1, 0] = -k * torch.sin(kl)
-        M[1, 1] = torch.cos(kl)
+            kl = self.L * k
+            M[0, 0] = torch.cos(kl)
+            M[0, 1] = torch.sin(kl) / k
+            M[1, 0] = -k * torch.sin(kl)
+            M[1, 1] = torch.cos(kl)
 
-        M[2, 2] = torch.cosh(kl)
-        M[2, 3] = torch.sinh(kl) / k
-        M[3, 2] = k * torch.sinh(kl)
-        M[3, 3] = torch.cosh(kl)
+            M[2, 2] = torch.cosh(kl)
+            M[2, 3] = torch.sinh(kl) / k
+            M[3, 2] = k * torch.sinh(kl)
+            M[3, 3] = torch.cosh(kl)
 
-        if flip:
-            M = rot(- np.pi / 2) @ M @ rot(np.pi / 2)
+            if flip:
+                M = rot(- np.pi / 2) @ M @ rot(np.pi / 2)
 
         return M
 

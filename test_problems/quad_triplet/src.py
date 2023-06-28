@@ -1,6 +1,6 @@
 import torch
 
-from accelerator_toy_models import simple_lattices
+from ..accelerator_toy_models import simple_lattices
 
 
 def beamsize(input_data):
@@ -33,13 +33,13 @@ def beamsize(input_data):
 
     total_size = torch.sqrt(final_beam_matrix[0, 0]**2 + final_beam_matrix[2, 2]**2)
     return {
-        "m11": final_beam_matrix[0, 0],
-        "m22": final_beam_matrix[2, 2],
-        "total_size": total_size
+        "m11": float(final_beam_matrix[0, 0]),
+        "m22": float(final_beam_matrix[2, 2]),
+        "total_size": float(total_size)
     }
 
 
 # define vocs
-variables = {"k1": [-300, 300], "k2": [-300, 300], "k3": [-300, 300]}
-objectives = {"total_size": "MINIMIZE"}
+VARIABLES = {"k1": [-30, 30], "k2": [-30, 30], "k3": [-30, 30]}
+OBJECTIVES = {"total_size": "MINIMIZE"}
 
