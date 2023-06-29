@@ -3,7 +3,7 @@ import torch
 from ..accelerator_toy_models import simple_lattices
 
 
-def beamsize_triplet(input_data):
+def beamsize_quadlet(input_data):
     """
     calculate final beam sizes as a function of quadrupole strengths [k1,k2,k3]
 
@@ -25,10 +25,10 @@ def beamsize_triplet(input_data):
 
     #print(torch.det(init_beam_matrix[:2, :2]).sqrt())
 
-    K = torch.tensor([input_data[f"k{i}"] for i in range(1, 4)])
+    K = torch.tensor([input_data[f"k{i}"] for i in range(1, 5)])
 
     # create accelerator lattice object with one quad and a drift
-    line = simple_lattices.create_triplet(K)
+    line = simple_lattices.create_quadlet(K)
 
     # propagate beam matrix
     final_beam_matrix = line.propagate_beam_matrix(init_beam_matrix)
@@ -44,6 +44,6 @@ def beamsize_triplet(input_data):
 
 
 # define vocs
-VARIABLES = {"k1": [-300, 300], "k2": [-300, 300], "k3": [-300, 300]}
+VARIABLES = {"k1": [-300, 300], "k2": [-300, 300], "k3": [-300, 300], "k4": [-300, 300]}
 OBJECTIVES = {"total_size": "MINIMIZE"}
 
