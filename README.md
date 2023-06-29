@@ -3,6 +3,8 @@
 
 
 # Install
+```
 git clone https://github.com/roussel-ryan/test_problems
 cd test_problems/
 pip install .
+```
